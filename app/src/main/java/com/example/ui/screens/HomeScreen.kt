@@ -28,6 +28,10 @@ import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.GraphicEq
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Radio
+import androidx.compose.material.icons.filled.Hub
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilledIconButton
@@ -77,6 +81,7 @@ fun HomeScreen(
     val favorites by viewModel.favoriteTracks.collectAsState()
     val playerState by viewModel.playerState.collectAsState()
     val stationCategories by viewModel.stationCategories.collectAsState()
+    val isAresConnected by viewModel.isAresNetworkConnected.collectAsState()
 
     val displayTracks = catalogTracks
 
@@ -140,6 +145,15 @@ fun HomeScreen(
                 color = MaterialTheme.colorScheme.onBackground
             )
         }
+
+        Spacer(modifier = Modifier.height(4.dp))
+
+        AresNetworkSwitchCard(
+            isAresConnected = isAresConnected,
+            onToggle = { enabled ->
+                viewModel.toggleAresNetwork(enabled)
+            }
+        )
 
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -546,6 +560,79 @@ fun SpotifyTrackRow(
                     modifier = Modifier.size(18.dp)
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun AresNetworkSwitchCard(
+    isAresConnected: Boolean,
+    onToggle: (Boolean) -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 4.dp)
+            .testTag("ares_network_switch_card"),
+        shape = RoundedCornerShape(14.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        border = androidx.compose.foundation.BorderStroke(
+            1.dp,
+            if (isAresConnected) Color(0xFF10B981).copy(alpha = 0.6f) else MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
+        )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(14.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier.weight(1f)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(38.dp)
+                        .clip(CircleShape)
+                        .background(
+                            if (isAresConnected) Color(0xFF10B981).copy(alpha = 0.2f)
+                            else MaterialTheme.colorScheme.surfaceVariant
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Hub,
+                        contentDescription = null,
+                        tint = if (isAresConnected) Color(0xFF10B981) else MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+                Column {
+                    Text(
+                        text = "Red Ares Global",
+                        style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                    Text(
+                        text = if (isAresConnected) "Conectado • Sincronización P2P activa" else "Desconectado • Pulsa para conectar",
+                        style = MaterialTheme.typography.labelSmall.copy(fontSize = 11.sp),
+                        color = if (isAresConnected) Color(0xFF10B981) else MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+
+            Switch(
+                checked = isAresConnected,
+                onCheckedChange = onToggle,
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = Color(0xFF10B981),
+                    checkedTrackColor = Color(0xFF10B981).copy(alpha = 0.5f)
+                ),
+                modifier = Modifier.testTag("ares_network_switch")
+            )
         }
     }
 }

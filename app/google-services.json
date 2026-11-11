@@ -1,0 +1,175 @@
+{
+  "project_info": {
+    "project_number": "569797645369",
+    "firebase_url": "https://vortexcrypto-default-rtdb.firebaseio.com",
+    "project_id": "vortexcrypto",
+    "storage_bucket": "vortexcrypto.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:569797645369:android:6e2967da5ceae1c1a4a9e8",
+        "android_client_info": {
+          "package_name": "com.aistudio.thalassadive.kzrpx"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "569797645369-b5uq114vqul853r944cgduu7fff7hrv8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aistudio.thalassadive.kzrpx",
+            "certificate_hash": "582f473b197f30f501865f67cc9a245b2ad80453"
+          }
+        },
+        {
+          "client_id": "569797645369-idtfm7du1hl615hjnet9e8a29uknf9r7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9yBNSJqbLPtub-rSYQ14ZFBHMnUslqQs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "569797645369-idtfm7du1hl615hjnet9e8a29uknf9r7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:569797645369:android:c0a872bab2805471a4a9e8",
+        "android_client_info": {
+          "package_name": "com.vortex.aresnet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "569797645369-m6cgcj6kfo81b8tj0cu18a2u9gg894mb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vortex.aresnet",
+            "certificate_hash": "49b45a86664e60630f5dc7f5784dd95331fba624"
+          }
+        },
+        {
+          "client_id": "569797645369-idtfm7du1hl615hjnet9e8a29uknf9r7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9yBNSJqbLPtub-rSYQ14ZFBHMnUslqQs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "569797645369-idtfm7du1hl615hjnet9e8a29uknf9r7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:569797645369:android:e774149ad9893747a4a9e8",
+        "android_client_info": {
+          "package_name": "com.vortex.mercado"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "569797645369-8bfc3ibjvleujtv4p6v7fe865rqmeiv4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vortex.mercado",
+            "certificate_hash": "df76d83ab150a23c32c2affe8ff6b08fc05d59b8"
+          }
+        },
+        {
+          "client_id": "569797645369-idtfm7du1hl615hjnet9e8a29uknf9r7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9yBNSJqbLPtub-rSYQ14ZFBHMnUslqQs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "569797645369-idtfm7du1hl615hjnet9e8a29uknf9r7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:569797645369:android:279fa4787017bd6fa4a9e8",
+        "android_client_info": {
+          "package_name": "com.vortexsoft.confidente"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "569797645369-em4egjliif50pah5n9pnh2vslgaqi2l3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vortexsoft.confidente",
+            "certificate_hash": "49b45a86664e60630f5dc7f5784dd95331fba624"
+          }
+        },
+        {
+          "client_id": "569797645369-fpaleqsj126p18ogho88idilko8heclo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vortexsoft.confidente",
+            "certificate_hash": "1e2f1c7bb933b3f7038e85bef89f464b3418ba77"
+          }
+        },
+        {
+          "client_id": "569797645369-hi2jepavu39dnb4l6f5lt1pna3bfevj9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vortexsoft.confidente",
+            "certificate_hash": "a70ca6f75abf8d1e4d7b42ec382164751b3589f0"
+          }
+        },
+        {
+          "client_id": "569797645369-idtfm7du1hl615hjnet9e8a29uknf9r7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9yBNSJqbLPtub-rSYQ14ZFBHMnUslqQs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "569797645369-idtfm7du1hl615hjnet9e8a29uknf9r7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

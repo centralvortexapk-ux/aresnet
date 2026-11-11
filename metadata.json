@@ -1,0 +1,6 @@
+{
+  "name": "AresNet",
+  "description": "Cliente y servidor P2P descentralizado con identidad criptográfica soberana, verificación SHA-256 por bloques, gestor de descargas y reproductor multimedia.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

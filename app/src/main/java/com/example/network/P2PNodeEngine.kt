@@ -406,48 +406,9 @@ class P2PNodeEngine(
     }
 
     /**
-     * Discover peers from tracker for all active hashes in the network
+     * Discover peers from tracker for a specific file hash and connect to them
      */
-    suspend fun discoverAllPeersFromTracker(trackerClient: P2PTrackerClient) {
-        withContext(Dispatchers.IO) {
-            try {
-                val allHashes = trackerClient.getAllActiveHashes()
-                val identity = identityManager.getOrGenerateIdentity()
-                val myHashes = database.sharedFileDao().getAllSharedFilesList().map { it.fileSha256 }.toSet()
-                
-                for (hash in allHashes) {
-                    // Skip our own files
-                    if (myHashes.contains(hash)) continue
-                    // Discover peers for this hash
-                    val seeders = trackerClient.queryPeersForHash(hash)
-                    for (seeder in seeders) {
-                        val parts = when {
-                            seeder.contains("|") -> {
-                                val p = seeder.split("|")
-                                if (p.size >= 2) p[1] else seeder
-                            }
-                            else -> seeder
-                        }
-                        val ipPort = parts.split(":")
-                        if (ipPort.size == 2) {
-                            val host = ipPort[0]
-                            val port = ipPort[1].toIntOrNull() ?: continue
-                            if (host == "127.0.0.1" && port == _currentPort.value) continue
-                            if (host.isEmpty() || host == "0.0.0.0") continue
-                            if (peerMap.values.none { it.host == host && it.port == port }) {
-                                launch {
-                                    connectToRemotePeer(host, port)
-                                }
-                            }
-                        }
-                    }
-                }
-                Log.d(tag, "Discovered peers for ${allHashes.size} hashes from tracker")
-            } catch (e: Exception) {
-                Log.w(tag, "Failed to discover all peers from tracker: ${e.message}")
-            }
-        }
-    }
+    suspend fun discoverPeersFromTracker(trackerClient: P2PTrackerClient, fileSha256: String) {
         withContext(Dispatchers.IO) {
             try {
                 val seeders = trackerClient.queryPeersForHash(fileSha256)

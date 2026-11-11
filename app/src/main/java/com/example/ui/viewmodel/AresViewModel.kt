@@ -99,6 +99,36 @@ class AresViewModel(application: Application) : AndroidViewModel(application) {
     val trackerClient = app.trackerClient
     val trackerStatus: StateFlow<com.example.network.tracker.TrackerStatus> = trackerClient.trackerStatus
 
+    private val _isAresNetworkConnected = MutableStateFlow(false)
+    val isAresNetworkConnected: StateFlow<Boolean> = _isAresNetworkConnected.asStateFlow()
+
+    fun toggleAresNetwork(connect: Boolean) {
+        _isAresNetworkConnected.value = connect
+        if (connect) {
+            _userMessage.value = "Conectándose a la red Ares..."
+            viewModelScope.launch {
+                try {
+                    val result = trackerClient.announce(localPort = nodeEngine.currentPort.value)
+                    if (result.success) {
+                        trackerClient.startHeartbeat(nodeEngine.currentPort.value)
+                        _isAresNetworkConnected.value = true
+                        _userMessage.value = "¡Conectado a la red Ares con éxito!"
+                    } else {
+                        _isAresNetworkConnected.value = false
+                        _userMessage.value = "Error al conectar: ${result.message}"
+                    }
+                } catch (e: Exception) {
+                    _isAresNetworkConnected.value = false
+                    _userMessage.value = "Error al conectar a la red Ares: ${e.localizedMessage}"
+                }
+            }
+        } else {
+            trackerClient.stopHeartbeat()
+            _isAresNetworkConnected.value = false
+            _userMessage.value = "Desconectado de la red Ares"
+        }
+    }
+
     fun setTrackerUrl(url: String) {
         trackerClient.setTrackerUrl(url)
         _userMessage.value = "URL del Tracker configurada"
@@ -169,9 +199,10 @@ class AresViewModel(application: Application) : AndroidViewModel(application) {
             // Discover peers for all shared files from other users and active tracker hashes
             viewModelScope.launch {
                 try {
-                    // Discover all peers from tracker for any active hashes
-                    nodeEngine.discoverAllPeersFromTracker(trackerClient)
-                    // Also ensure discovery for our own shared files
+                    val activeHashes = trackerClient.queryActiveHashes()
+                    for (hash in activeHashes) {
+                        nodeEngine.discoverPeersFromTracker(trackerClient, hash)
+                    }
                     val allShared = database.sharedFileDao().getAllSharedFilesList()
                     for (file in allShared) {
                         nodeEngine.discoverPeersFromTracker(trackerClient, file.fileSha256)

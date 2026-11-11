@@ -95,7 +95,8 @@ class P2PTrackerClient(
                 put("sharedHashes", JSONArray(hashes))
             }
 
-            val url = URL("$trackerUrl/api/p2p/announce")
+            val base = trackerUrl.trim().removeSuffix("/")
+            val url = URL("$base/api/p2p/announce")
             val conn = (url.openConnection() as HttpURLConnection).apply {
                 requestMethod = "POST"
                 connectTimeout = 4000
@@ -150,39 +151,16 @@ class P2PTrackerClient(
     }
 
     /**
-     * Queries tracker for all active file hashes registered in the network
+     * Queries tracker for list of peers seeding a specific file hash across Internet.
      */
-    suspend fun getAllActiveHashes(
+    suspend fun queryPeersForHash(
+        fileSha256: String,
         trackerUrl: String = _trackerStatus.value.url
     ): List<String> = withContext(Dispatchers.IO) {
-        val hashesList = mutableListOf<String>()
-        try {
-            val url = URL("$trackerUrl/api/p2p/hashes")
-            val conn = (url.openConnection() as HttpURLConnection).apply {
-                requestMethod = "GET"
-                connectTimeout = 3500
-                readTimeout = 3500
-                setRequestProperty("Accept", "application/json")
-            }
-
-            if (conn.responseCode in 200..299) {
-                val responseStr = BufferedReader(InputStreamReader(conn.inputStream)).use { it.readText() }
-                val json = JSONObject(responseStr)
-                val arr = json.optJSONArray("hashes")
-                if (arr != null) {
-                    for (i in 0 until arr.length()) {
-                        hashesList.add(arr.getString(i))
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            Log.d(tag, "Failed to get all hashes: ${e.message}")
-        }
-        hashesList
-    }
         val seedersList = mutableListOf<String>()
         try {
-            val url = URL("$trackerUrl/api/p2p/peers?hash=$fileSha256")
+            val base = trackerUrl.trim().removeSuffix("/")
+            val url = URL("$base/api/p2p/peers?hash=$fileSha256")
             val conn = (url.openConnection() as HttpURLConnection).apply {
                 requestMethod = "GET"
                 connectTimeout = 3500
@@ -214,7 +192,8 @@ class P2PTrackerClient(
     ): List<String> = withContext(Dispatchers.IO) {
         val hashesList = mutableListOf<String>()
         try {
-            val url = URL("$trackerUrl/api/p2p/hashes")
+            val base = trackerUrl.trim().removeSuffix("/")
+            val url = URL("$base/api/p2p/hashes")
             val conn = (url.openConnection() as HttpURLConnection).apply {
                 requestMethod = "GET"
                 connectTimeout = 3500
@@ -251,7 +230,8 @@ class P2PTrackerClient(
                 put("hash", fileSha256)
                 put("reason", reason)
             }
-            val url = URL("$trackerUrl/api/p2p/report")
+            val base = trackerUrl.trim().removeSuffix("/")
+            val url = URL("$base/api/p2p/report")
             val conn = (url.openConnection() as HttpURLConnection).apply {
                 requestMethod = "POST"
                 connectTimeout = 3000
@@ -283,6 +263,9 @@ class P2PTrackerClient(
         }
     }
 
+    /**
+     * Stops background heartbeat.
+     */
     fun stopHeartbeat() {
         heartbeatJob?.cancel()
     }
