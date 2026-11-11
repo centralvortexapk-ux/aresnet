@@ -23,7 +23,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 data class TrackerStatus(
-    val url: String = "https://aresnet-tracker.onrender.com",
+    val url: String = "https://aresnet.onrender.com",
     val isConnected: Boolean = false,
     val lastAnnounceTimestamp: Long = 0,
     val announcedHashesCount: Int = 0,
@@ -56,7 +56,7 @@ class P2PTrackerClient(
     private var heartbeatJob: Job? = null
 
     companion object {
-        const val DEFAULT_TRACKER_URL = "https://aresnet-tracker.onrender.com"
+        const val DEFAULT_TRACKER_URL = "https://aresnet.onrender.com"
         const val LOCAL_DEV_TRACKER_URL = "http://10.0.2.2:3000"
     }
 
